@@ -1,0 +1,7 @@
+[tool.ruff]
+exclude = [".git"]
+per-file-ignores = { "__init__.py" = ["F403"] }
+
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
