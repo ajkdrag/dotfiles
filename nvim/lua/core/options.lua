@@ -1,6 +1,6 @@
 -- Set the leader and local leader key for key mappings
-vim.g.mapleader = ';'
-vim.g.maplocalleader = ';'
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 -- Set the behavior of the backspace key
 vim.opt.backspace:append('indent')
@@ -53,3 +53,7 @@ vim.opt.smartcase = true
 
 -- Enable system clipboard integration
 vim.opt.clipboard = 'unnamedplus'
+
+-- augment code
+vim.g.augment_workspace_folders = {"/Users/solarbeam/Workspace/pkm/kb-vscode/"}
+

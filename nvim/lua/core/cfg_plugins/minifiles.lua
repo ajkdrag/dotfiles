@@ -13,10 +13,11 @@ minifiles.setup({
   },
 })
 
+
 -- Define the toggle function
 local function toggle_minifiles()
   if not minifiles.close() then
-    minifiles.open(vim.fn.getcwd(), true)
+    minifiles.open(vim.fn.expand('%:p:h') ~= '' and vim.fn.expand('%:p:h') or vim.fn.getcwd(), true)
   end
 end
 
@@ -28,5 +29,7 @@ local function open_lua_dir()
 end
 
 
-vim.keymap.set('n', '<leader>en', open_lua_dir, { noremap = true, silent = true , desc = "[E]xplore [N]vim config directory"})
-vim.keymap.set('n', '<leader>ec', toggle_minifiles, { noremap = true, silent = true, desc = "Toggle [E]xplorer [C]onfiguration"})
+vim.keymap.set('n', '<leader>en', open_lua_dir,
+  { noremap = true, silent = true, desc = "[E]xplore [N]vim config directory" })
+vim.keymap.set('n', '<leader>ec', toggle_minifiles,
+  { noremap = true, silent = true, desc = "Toggle [E]xplorer [C]onfiguration" })

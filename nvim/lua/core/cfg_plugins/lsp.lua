@@ -14,7 +14,7 @@ require('lspconfig').dartls.setup({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'ruff_lsp', 'pylsp' },
+  ensure_installed = { 'lua_ls', 'pylsp', 'clangd' },
   handlers = {
     default_setup,
     -- custom configs here: https://lsp-zero.netlify.app/v3.x/blog/you-might-not-need-lsp-zero.html
@@ -61,24 +61,6 @@ require('mason-lspconfig').setup({
   },
 })
 
-local cmp = require('cmp')
-
-cmp.setup({
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'codeium' }
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  }),
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-})
-
-
 -- lua/core/keymaps.lua
 function table.merge(t1, t2)
   local merged = {}
@@ -104,8 +86,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({ 'n', 'x' }, '<leader>cf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>',
-      table.merge(opts, { desc = "code [F]ormat" }))
+    vim.keymap.set({ 'n', 'x' }, '<leader>fd', '<cmd>lua vim.lsp.buf.format({async = true})<cr>',
+      table.merge(opts, { desc = "Format [D]ocument" }))
     vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>',
       table.merge(opts, { desc = "code [A]ctions" }))
   end

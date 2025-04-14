@@ -73,3 +73,12 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
+
+# Created by `pipx` on 2024-10-24 06:51:46
+export PATH="$PATH:/Users/solarbeam/.local/bin"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/solarbeam/.lmstudio/bin"
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.4.1

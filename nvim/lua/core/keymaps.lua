@@ -9,9 +9,6 @@ map('v', 'jk', '<Esc>', { noremap = true })
 map('n', 'j', 'gj', { noremap = true })
 map('n', 'k', 'gk', { noremap = true })
 
--- Map 'H' to move to the beginning of the line and 'L' to move to the end of the line
-map('n', 'H', '^', { noremap = true })
-map('n', 'L', '$', { noremap = true })
 
 -- Navigate between splits with Ctrl-h/j/k/l
 map('n', '<C-J>', '<C-W><C-J>', { noremap = true })
@@ -21,3 +18,25 @@ map('n', '<C-H>', '<C-W><C-H>', { noremap = true })
 
 -- Clear search highlight
 map('n', '<leader>h', ':nohlsearch<CR>', { noremap = true, silent = true })
+
+-- cpp keymaps
+map('n', '<leader>cp',
+  '<ESC>:w<CR>:!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -DDEBUG -O2 -o %< % && ./%< < inp <CR>',
+  { noremap = true })
+map('i', '<leader>cp',
+  '<ESC>:w<CR>:!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -DDEBUG -O2 -o %< % && ./%< < inp <CR>',
+  { noremap = true })
+
+
+map('n', '<leader>pp', '<ESC>:w<CR>:!python3 % < inp<CR>',
+  { noremap = true })
+map('i', '<leader>pp', '<ESC>:w<CR>:!python3 % < inp<CR>',
+  { noremap = true })
+
+
+-- map("n", "<leader>ck", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+--
+-- map("n", "<leader>ct", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true }
+-- )
+--
+-- map("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })

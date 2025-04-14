@@ -14,7 +14,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("core.options")
-require("core.keymaps")
-require("core.plugins")
-require("core.cfg_plugins")
+if vim.g.vscode then
+  require("core.vscode_keymaps")
+else
+  require("core.options")
+  require("core.keymaps")
+  require("core.plugins")
+  require("core.cfg_plugins")
+end
+

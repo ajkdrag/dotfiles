@@ -23,11 +23,22 @@ require("lazy").setup({
   "hrsh7th/nvim-cmp",
   "hrsh7th/cmp-nvim-lsp",
   "L3MON4D3/LuaSnip",
-  {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp"
-    }
-  }
+  "saadparwaiz1/cmp_luasnip",
+  "brenoprata10/nvim-highlight-colors",
+  { 'augmentcode/augment.vim' },
+  -- {
+  --   "olimorris/codecompanion.nvim",
+  --   config = true,
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  -- },
+  --   {
+  --     "Exafunction/codeium.nvim",
+  --     dependencies = {
+  --       "nvim-lua/plenary.nvim",
+  --       "hrsh7th/nvim-cmp"
+  --     }
+  --   }
 })
