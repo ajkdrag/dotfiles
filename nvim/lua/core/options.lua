@@ -55,5 +55,5 @@ vim.opt.smartcase = true
 vim.opt.clipboard = 'unnamedplus'
 
 -- augment code
-vim.g.augment_workspace_folders = {"/Users/solarbeam/Workspace/pkm/kb-vscode/"}
+vim.g.augment_workspace_folders = {"/Users/solarbeam/Workspace/pkm/kb/", "/Users/solarbeam/Workspace/repos/ai-assisted-compliance-analysis"}
 
