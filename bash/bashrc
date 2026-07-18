@@ -1,7 +1,7 @@
 # Minimal bashrc — for servers without zsh
 # Symlinked as ~/.bashrc when zsh is not available
 
-export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$HOME/.local/share/nvim/mason/bin:$PATH"
 
 if command -v mise &>/dev/null; then
   eval "$(mise activate bash)"

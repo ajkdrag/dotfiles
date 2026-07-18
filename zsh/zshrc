@@ -2,7 +2,7 @@
 # Works on any machine with zsh + git
 
 # --- Path ---
-export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$HOME/.local/share/nvim/mason/bin:$PATH"
 
 # --- Mise (tool version manager) ---
 if command -v mise &>/dev/null; then
