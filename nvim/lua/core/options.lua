@@ -42,9 +42,7 @@ vim.opt.foldlevel = 99
 vim.opt.lazyredraw = true
 vim.opt.ttyfast = true
 
--- Clipboard over SSH/tmux via OSC 52
-vim.g.clipboard = "osc52"
-vim.opt.clipboard = "unnamedplus"
+
 
 -- Splits
 vim.opt.splitright = true
