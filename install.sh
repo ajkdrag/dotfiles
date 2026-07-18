@@ -77,28 +77,6 @@ install_tools() {
   fi
 }
 
-install_nerd_font() {
-  local font_dir archive
-  case "$(uname -s)" in
-    Darwin) font_dir="$HOME/Library/Fonts" ;;
-    *) font_dir="$HOME/.local/share/fonts" ;;
-  esac
-
-  if find "$font_dir" -maxdepth 1 -iname '*JetBrainsMono*Nerd*' -print -quit 2>/dev/null | grep -q .; then
-    echo "✓ JetBrainsMono Nerd Font already installed"
-    return
-  fi
-
-  echo "Installing JetBrainsMono Nerd Font..."
-  mkdir -p "$font_dir"
-  archive="$(mktemp)"
-  curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz -o "$archive"
-  tar -xJf "$archive" -C "$font_dir" --wildcards '*.ttf'
-  rm -f "$archive"
-  command -v fc-cache &>/dev/null && fc-cache -f "$font_dir"
-  echo "✓ JetBrainsMono Nerd Font installed"
-}
-
 # --- Symlink configs ---
 link_configs() {
   echo "Linking configs..."
@@ -128,8 +106,6 @@ if [ "$LINK_ONLY" = false ]; then
   install_mise
   echo ""
   install_tools
-  echo ""
-  install_nerd_font
   echo ""
 fi
 

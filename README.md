@@ -31,11 +31,7 @@ That's it. Restart your shell.
 2. Installs all tools via `mise install`
 3. Symlinks configs into `~/.config/`
 4. Backs up any existing configs to `~/.dotfiles-backup-<timestamp>/`
-5. Installs JetBrainsMono Nerd Font in the user font directory
-
-For Neovim icons in JupyterLab, select `JetBrainsMono Nerd Font` in the
-browser machine's JupyterLab terminal settings. Installing it only on a
-remote server does not change the font used by a local browser.
+For Neovim icons in JupyterLab, install/select a Nerd Font on the local client. Installing it only on a remote server does not change browser rendering.
 
 ## Structure
 
