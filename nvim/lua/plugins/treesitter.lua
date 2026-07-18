@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "master", -- ponytail: main branch rewrite dropped .configs module
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
   config = function()
