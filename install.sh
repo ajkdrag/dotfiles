@@ -67,7 +67,8 @@ install_tools() {
   echo "Installing tools via mise..."
   # Trust the config
   mise trust "$DOTFILES_DIR/mise/config.toml" 2>/dev/null || true
-  mise install --cd "$DOTFILES_DIR/mise"
+  # ponytail: skip sigstore attestation verify, corp proxies block TUF CDN
+  MISE_AQUA_GITHUB_ATTESTATIONS=false mise install --cd "$DOTFILES_DIR/mise"
   echo "✓ tools installed"
 
   # Python via uv (fast, no compile)
