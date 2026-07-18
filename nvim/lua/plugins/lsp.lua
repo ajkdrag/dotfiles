@@ -40,6 +40,7 @@ return {
                 basedpyright = {
                   analysis = {
                     typeCheckingMode = "basic",
+                    diagnosticMode = "openFilesOnly",
                     autoSearchPaths = true,
                     useLibraryCodeForTypes = true,
                   },
