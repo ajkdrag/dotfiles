@@ -1,6 +1,8 @@
+-- Disable netrw (we use mini.files or oil)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -8,18 +10,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
-if vim.g.vscode then
-  require("core.vscode_keymaps")
-else
-  require("core.options")
-  require("core.keymaps")
-  require("core.plugins")
-  require("core.cfg_plugins")
-end
-
+-- Load core modules in order
+require("core.options")   -- vim.opt settings, leader key
+require("core.keymaps")   -- all keymaps in one place
+require("core.lazy")      -- plugin declarations + lazy setup
+require("core.autocmds")  -- autocommands

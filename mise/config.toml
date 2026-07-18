@@ -1,0 +1,9 @@
+[tools]
+neovim = "latest"
+tmux = "latest"
+fzf = "latest"
+ripgrep = "latest"
+fd = "latest"
+lazygit = "latest"
+node = "lts"
+uv = "latest"
