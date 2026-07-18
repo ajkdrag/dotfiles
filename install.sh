@@ -121,9 +121,5 @@ fi
 
 echo ""
 echo "=== Done ==="
-if command -v zsh &>/dev/null; then
-  echo "Restart your shell or run: exec zsh"
-else
-  echo "zsh not found. Add to ~/.bashrc: source ~/dotfiles/zsh/zshrc"
-  echo "Then: source ~/.bashrc"
-fi
+echo "Restart your shell"
+

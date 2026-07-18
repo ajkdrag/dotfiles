@@ -15,9 +15,6 @@ shopt -s histappend
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Aliases
-alias ls='ls --color=auto 2>/dev/null || ls -G'
-alias ll='ls -lah'
-alias la='ls -A'
 alias grep='grep --color=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -28,6 +25,8 @@ alias vim='nvim'
 export EDITOR='nvim'
 export VISUAL='nvim'
 
+alias ga='git add'
+alias gc='git commit -m '
 alias gs='git status'
 alias gd='git diff'
 alias gp='git push'
