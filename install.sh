@@ -82,8 +82,14 @@ link_configs() {
   echo "Linking configs..."
   backup_and_link "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
   backup_and_link "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
-  backup_and_link "$DOTFILES_DIR/zsh/zshrc" "$HOME/.zshrc"
   backup_and_link "$DOTFILES_DIR/mise" "$HOME/.config/mise"
+
+  # Shell: zsh if available, bash otherwise
+  if command -v zsh &>/dev/null; then
+    backup_and_link "$DOTFILES_DIR/zsh/zshrc" "$HOME/.zshrc"
+  else
+    backup_and_link "$DOTFILES_DIR/bash/bashrc" "$HOME/.bashrc"
+  fi
   echo "✓ configs linked"
 
   if [ -d "$BACKUP_DIR" ]; then
@@ -115,4 +121,9 @@ fi
 
 echo ""
 echo "=== Done ==="
-echo "Restart your shell or run: exec zsh"
+if command -v zsh &>/dev/null; then
+  echo "Restart your shell or run: exec zsh"
+else
+  echo "zsh not found. Add to ~/.bashrc: source ~/dotfiles/zsh/zshrc"
+  echo "Then: source ~/.bashrc"
+fi
