@@ -44,6 +44,34 @@ backup_and_link() {
   echo "  ✓ $dst → $src"
 }
 
+# Shell rc files get a stub that sources the repo, not a symlink to it.
+# Some environments re-provision $HOME by copying /etc/skel over it, and cp
+# follows symlinks — writing straight through into this repo and destroying
+# the real config. A stub keeps the blast radius on a file that
+# ./install.sh --link rebuilds in a second.
+write_stub() {
+  local src="$1"
+  local dst="$2"
+  local stub="# Managed by dotfiles — real config lives in $src
+[ -f \"$src\" ] && . \"$src\""
+
+  if [ -f "$dst" ] && [ ! -L "$dst" ] && [ "$(cat "$dst")" = "$stub" ]; then
+    echo "  ✓ $dst (already stubbed)"
+    return
+  fi
+
+  # Backup whatever is there — including a stale symlink from an older install
+  if [ -e "$dst" ] || [ -L "$dst" ]; then
+    mkdir -p "$BACKUP_DIR"
+    echo "  → backing up $dst"
+    mv "$dst" "$BACKUP_DIR/"
+  fi
+
+  mkdir -p "$(dirname "$dst")"
+  printf '%s\n' "$stub" > "$dst"
+  echo "  ✓ $dst → sources $src"
+}
+
 # --- Install mise ---
 install_mise() {
   if command -v mise &>/dev/null; then
@@ -86,9 +114,9 @@ link_configs() {
 
   # Shell: zsh if available, bash otherwise
   if command -v zsh &>/dev/null; then
-    backup_and_link "$DOTFILES_DIR/zsh/zshrc" "$HOME/.zshrc"
+    write_stub "$DOTFILES_DIR/zsh/zshrc" "$HOME/.zshrc"
   else
-    backup_and_link "$DOTFILES_DIR/bash/bashrc" "$HOME/.bashrc"
+    write_stub "$DOTFILES_DIR/bash/bashrc" "$HOME/.bashrc"
   fi
   echo "✓ configs linked"
 
@@ -122,4 +150,3 @@ fi
 echo ""
 echo "=== Done ==="
 echo "Restart your shell"
-
