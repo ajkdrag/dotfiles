@@ -1,8 +1,10 @@
 [tools]
 neovim = "latest"
-tmux = "latest"
+tmux = { version = "latest", os = ["linux", "macos"] }
 fzf = "latest"
 ripgrep = "latest"
 fd = "latest"
 lazygit = "latest"
 uv = "latest"
+# C compiler for nvim-treesitter parsers. Linux and macOS already have cc.
+zig = { version = "latest", os = ["windows"] }
