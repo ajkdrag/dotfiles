@@ -25,7 +25,7 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-Windows (PowerShell, no admin needed):
+Windows (PowerShell; the only admin prompt is the font install):
 
 ```powershell
 git clone <this-repo> $HOME\dotfiles
@@ -41,6 +41,8 @@ That's it. Restart your shell.
 2. Installs all tools via `mise install`
 3. Links configs into place (symlinks, or junctions on Windows) and writes a shell rc stub that sources this repo
 4. Backs up any existing configs to `~/.dotfiles-backup-<timestamp>/`
+5. On Windows, installs JetBrainsMono Nerd Font and sets it as the Windows Terminal default font, unless a font is already chosen there. This also covers nvim inside WSL, since the terminal draws the icons.
+
 For Neovim icons in JupyterLab, install/select a Nerd Font on the local client. Installing it only on a remote server does not change browser rendering.
 
 ## Structure

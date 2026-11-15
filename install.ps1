@@ -100,6 +100,72 @@ function Install-Tools {
   }
 }
 
+# Nerd Font for nvim icons. The terminal draws them, so the font lives on the
+# Windows side even when nvim runs inside WSL.
+$FontFace = 'JetBrainsMono NF'
+$FontPackage = 'DEVCOM.JetBrainsMonoNerdFont'
+
+function Test-FontInstalled($Face) {
+  foreach ($k in 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts',
+                 'HKCU:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts') {
+    $p = Get-ItemProperty $k -ErrorAction SilentlyContinue
+    if ($p -and ($p.PSObject.Properties.Name -like "$Face*")) { return $true }
+  }
+  return $false
+}
+
+function Install-Font {
+  if (Test-FontInstalled $FontFace) {
+    Write-Host "ok font already installed: $FontFace"
+    return
+  }
+  Write-Host "Installing $FontFace (asks for admin once)..."
+  winget install --id $FontPackage -e --accept-source-agreements --accept-package-agreements --disable-interactivity
+  if (Test-FontInstalled $FontFace) {
+    Write-Host "ok font installed: $FontFace"
+  } else {
+    Write-Warning "font install failed, run: winget install $FontPackage"
+  }
+}
+
+# Sets the default font for every Windows Terminal profile. Leaves a font the
+# user already chose alone.
+function Set-TerminalFont($Settings) {
+  if (-not (Test-Path -LiteralPath $Settings)) {
+    Write-Host '  -- Windows Terminal settings not found, skipping font'
+    return
+  }
+  if (-not (Test-FontInstalled $FontFace)) {
+    Write-Host "  -- $FontFace not installed, leaving terminal font alone"
+    return
+  }
+  try {
+    $json = Get-Content -LiteralPath $Settings -Raw | ConvertFrom-Json
+  } catch {
+    Write-Warning "could not parse $Settings, set the font to '$FontFace' by hand"
+    return
+  }
+  if (-not $json.profiles) { return }
+  if (-not $json.profiles.defaults) {
+    $json.profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([pscustomobject]@{}) -Force
+  }
+  $defaults = $json.profiles.defaults
+  if ($defaults.font -and $defaults.font.face) {
+    Write-Host "  ok terminal font ($($defaults.font.face), left as is)"
+    return
+  }
+  if (-not $defaults.font) {
+    $defaults | Add-Member -NotePropertyName font -NotePropertyValue ([pscustomobject]@{}) -Force
+  }
+  $defaults.font | Add-Member -NotePropertyName face -NotePropertyValue $FontFace -Force
+
+  New-Item -ItemType Directory -Force -Path $BackupDir | Out-Null
+  Copy-Item -LiteralPath $Settings -Destination (Join-Path $BackupDir 'windows-terminal-settings.json')
+  $text = $json | ConvertTo-Json -Depth 32
+  [IO.File]::WriteAllText($Settings, $text, (New-Object Text.UTF8Encoding $false))
+  Write-Host "  ok terminal font -> $FontFace"
+}
+
 function Link-Configs {
   Write-Host 'Linking configs...'
   # Neovim reads %LOCALAPPDATA%\nvim on Windows, mise reads ~\.config\mise.
@@ -111,6 +177,8 @@ function Link-Configs {
   $profileSrc = Join-Path $DotfilesDir 'powershell\profile.ps1'
   Write-Stub $profileSrc (Join-Path $docs 'WindowsPowerShell\Microsoft.PowerShell_profile.ps1')
   Write-Stub $profileSrc (Join-Path $docs 'PowerShell\Microsoft.PowerShell_profile.ps1')
+
+  Set-TerminalFont (Join-Path $env:LOCALAPPDATA 'Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json')
   Write-Host 'ok configs linked'
 
   if (Test-Path $BackupDir) {
@@ -126,6 +194,8 @@ if (-not $Link) {
   Install-Mise
   Write-Host ''
   Install-Tools
+  Write-Host ''
+  Install-Font
   Write-Host ''
 }
 
