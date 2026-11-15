@@ -46,7 +46,9 @@ map("n", "N", "Nzzzv", { noremap = true })
 map("x", "<leader>p", '"_dP', { desc = "[P]aste without yank" })
 
 -- Python: run file
-map("n", "<leader>pp", "<cmd>w<CR><cmd>!python3 %<CR>", { desc = "[P]ython [R]un" })
+-- Windows has no python3 on PATH
+local python = vim.fn.executable("python3") == 1 and "python3" or "python"
+map("n", "<leader>pp", "<cmd>w<CR><cmd>!" .. python .. " %<CR>", { desc = "[P]ython [R]un" })
 
 -- Diagnostics (non-LSP buffers)
 map("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostic" })
