@@ -140,6 +140,8 @@ fi
 link_configs
 
 # Pre-install nvim plugins headlessly
+# mise shims are not on PATH until the shell restarts, so nvim was never found here
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 if command -v nvim &>/dev/null; then
   echo ""
   echo "Installing neovim plugins..."
