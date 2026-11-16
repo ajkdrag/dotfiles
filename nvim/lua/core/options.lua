@@ -7,6 +7,7 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.autowrite = true
 vim.opt.autoread = true
 vim.opt.mouse = "a"
+vim.opt.clipboard = "unnamedplus" -- yank/paste via system clipboard (win32yank on WSL)
 
 -- UI
 vim.opt.number = true
